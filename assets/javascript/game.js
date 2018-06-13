@@ -73,12 +73,15 @@ var wordGame = {
                // alert(isFound);
             }
         }
-        console.log(isFound);
+        //console.log(isFound);
         $("#currentWord").val(wordGame.myUnderscoresArray.join(' '));
         if (!isFound) {
             //debugger;
             wordGame.numGuesses--;
+            wordGame.currentImg++;
+            $(".myImage").attr("src", wordGame.imgArray[wordGame.currentImg].src);
             $("#guessesRemaining").val(this.numGuesses);
+            wordGame.checkIfLost();
         }
         else {
             wordGame.checkIfWon();
@@ -124,7 +127,9 @@ var wordGame = {
         $("#guessesRemaining").val(wordGame.numGuesses);
         //document.getElementById("guessesRemaining").value = wordGame.numGuesses;
         wordGame.guessedLetters = [];
-        document.getElementById("guessedLetters").value = wordGame.guessedLetters;   
+        //document.getElementById("guessedLetters").value = wordGame.guessedLetters;   
+        $("#guessedLetters").val(wordGame.guessedLetters);
+        $(".myImage").attr("src", wordGame.imgArray[0].src);
     },
 
     //method to check if number of guesses is less than or equal to 0
@@ -160,7 +165,9 @@ var wordGame = {
 
 
 wordGame.fillImageArray();
-//$(".myImage").attr("src", wordGame.imgArray[0].src);
+
+
+
 
 //assign a function to the onkeyup event.
 //this function will check to see if the user's keystroke is a letter
