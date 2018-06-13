@@ -10,7 +10,7 @@
 //object to represent word game
 var wordGame = {
     //properties
-    numGuesses : 15,
+    numGuesses : 8,
     words : ["koreatown", "downtown", "silver lake", "echo park", "westwood", "macarthur park", "westwood", "los feliz", "venice", "marina del rey", "studio city", "century city", "mar vista", "sawtelle", "westchester", "playa del rey", "playa vista", "hollywood"],
     numWins : 0,
     numLosses : 0,
@@ -21,7 +21,8 @@ var wordGame = {
     numKeyPresses : 0,
     myUnderscoresArray: [],
     playAgain : null,
-    //imgArray : [],
+    imgArray : [],
+    currentImg : 0,
 
     //methods
 
@@ -53,7 +54,7 @@ var wordGame = {
             }
         }
         $("#currentWord").val(wordGame.myUnderscoresArray.join(' '));
-         $("#guessesRemaining").val(wordGame.numGuesses);
+        $("#guessesRemaining").val(wordGame.numGuesses);
          
         //document.getElementById("currentWord").value = wordGame.myUnderscoresArray.toString().replace(/,/g, ' ');
        // document.getElementById("guessesRemaining").value = wordGame.numGuesses;
@@ -72,14 +73,18 @@ var wordGame = {
                // alert(isFound);
             }
         }
-      /*  if (isFound === false) {
-            alert("entered the isFound if statemet");
-            debugger;
-            this.numGuesses--;
-            $("#guessesRemaining").val(this.numGuesses);
-        }  */
-        //document.getElementById("currentWord").value = wordGame.myUnderscoresArray.toString().replace(/,/g, ' ');
+        console.log(isFound);
         $("#currentWord").val(wordGame.myUnderscoresArray.join(' '));
+        if (!isFound) {
+            //debugger;
+            wordGame.numGuesses--;
+            $("#guessesRemaining").val(this.numGuesses);
+        }
+        else {
+            wordGame.checkIfWon();
+        }  
+        //document.getElementById("currentWord").value = wordGame.myUnderscoresArray.toString().replace(/,/g, ' ');
+        
     },
 
     //deterine if the user won the game
@@ -115,13 +120,47 @@ var wordGame = {
     resetGame : function() {
         wordGame.myUnderscoresArray = [];
         wordGame.startPlay();
-        wordGame.numGuesses = 15;
+        wordGame.numGuesses = 8;
         $("#guessesRemaining").val(wordGame.numGuesses);
         //document.getElementById("guessesRemaining").value = wordGame.numGuesses;
         wordGame.guessedLetters = [];
         document.getElementById("guessedLetters").value = wordGame.guessedLetters;   
+    },
+
+    //method to check if number of guesses is less than or equal to 0
+    checkIfLost : function() {
+        //check if guesses left less than 0
+        if (wordGame.numGuesses <= 0) {
+            var audioElement = document.createElement("audio");
+            audioElement.setAttribute("src", "assets/sounds/boo.wav");
+            wordGame.numLosses++;
+            $("#numLosses").val(wordGame.numLosses); 
+            audioElement.play();
+            $("#myLabel").text("Do you want to play again?\nPress any key to continue.").css("display", 'block');
+            wordGame.numKeyPresses = 0;
+            // wordGame.resetGame();
+        }
+    },
+
+    fillImageArray : function() {
+        for (var i = 0; i < 9; i++) {
+            wordGame.imgArray[i] = new Image();
+        }
+        wordGame.imgArray[0].src = 'assets/images/gallows.png';
+        wordGame.imgArray[1].src = 'assets/images/gallowsAndHead.png';
+        wordGame.imgArray[2].src = 'assets/images/gallowsHeadBody.png';
+        wordGame.imgArray[3].src = 'assets/images/gallowsHeadBodyLeftArm.png';
+        wordGame.imgArray[4].src = 'assets/images/gallowsHeadBodyBothArms.png';
+        wordGame.imgArray[5].src = 'assets/images/gallowsHeadBodyArmsLeftLeg.png';
+        wordGame.imgArray[6].src = 'assets/images/gallowsHeadBodyArmsLegs.png';
+        wordGame.imgArray[7].src = 'assets/images/gallowsHeadBodyArmsLegsLeftFoot.png';
+        wordGame.imgArray[8].src = 'assets/images/gallowsHeadBodyArmsLegsFeet.png';
     }
 };
+
+
+wordGame.fillImageArray();
+//$(".myImage").attr("src", wordGame.imgArray[0].src);
 
 //assign a function to the onkeyup event.
 //this function will check to see if the user's keystroke is a letter
@@ -162,32 +201,14 @@ document.onkeyup = function(ev) {
                 }
                 //key stroke was a valid alphabetic character and was not previously chosen
                 if (letterFound === false) {
+                    //add the guessed letter to the array
                     wordGame.guessedLetters.push(ev.key);
                     wordGame.currentLetterGuessed = ev.key;
+                    //display the updated array to the screen
                     $("#guessedLetters").val(wordGame.guessedLetters);
-                    wordGame.numGuesses--;
-                    //check if guesses left less than 0
-                    if (wordGame.numGuesses <= 0) {
-                        var audioElement = document.createElement("audio");
-                        audioElement.setAttribute("src", "assets/sounds/boo.wav");
-                        wordGame.numLosses++;
-                        $("#numLosses").val(wordGame.numLosses); 
-                        audioElement.play();
-                        $("#myLabel").text("Do you want to play again?\nPress any key to continue.").css("display", 'block');
-                        wordGame.numKeyPresses = 0;
-                       // wordGame.resetGame();
-                    }
-                    //player still has guesses remaining
-                    else {                      
-                        $("#guessesRemaining").val(wordGame.numGuesses);
-                    }
-                    //loop through word to search for instances of guessed letter
-                    for (var i = 0; i < wordGame.myWord.length; i++) {
-                        if (wordGame.currentLetterGuessed === wordGame.myWord[i]) {
-                            wordGame.searchWord();
-                            wordGame.checkIfWon();
-                        }  
-                    }
+                    
+                    //search the word to see if the user's guess is found
+                    wordGame.searchWord();
                 }
             }
             else {
