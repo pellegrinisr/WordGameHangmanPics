@@ -1,6 +1,6 @@
 # WordGuessGame
 
-One Paragraph of project description goes here
+This project is a hangman game with a Los Angeles theme.  I built this project using JQuery and JavaScript. The player has 8 guesses to figure out the word. The player only loses a guess if they choose an incorrect letter. 
 
 ## Getting Started
 
@@ -47,7 +47,7 @@ Please send me a pull request on github if you wish to contribute to this projec
 
 ## Authors
 
-* **Stephen Pellegrini** - *Initial work* - [pellegrinisr](https://github.com/pellegrinisr)
+* **Stephen Pellegrini** - [pellegrinisr](https://github.com/pellegrinisr)
 
 ## License
 
