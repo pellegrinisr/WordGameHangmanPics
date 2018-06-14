@@ -147,6 +147,7 @@ var wordGame = {
         }
     },
 
+    //method to fill the object's image array with the hangman pics
     fillImageArray : function() {
         for (var i = 0; i < 9; i++) {
             wordGame.imgArray[i] = new Image();
@@ -164,9 +165,8 @@ var wordGame = {
 };
 
 
+//function call to fill the array
 wordGame.fillImageArray();
-
-
 
 
 //assign a function to the onkeyup event.
