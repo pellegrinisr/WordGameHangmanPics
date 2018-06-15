@@ -130,6 +130,7 @@ var wordGame = {
         //document.getElementById("guessedLetters").value = wordGame.guessedLetters;   
         $("#guessedLetters").val(wordGame.guessedLetters);
         $(".myImage").attr("src", wordGame.imgArray[0].src);
+        wordGame.currentImg = 0;
     },
 
     //method to check if number of guesses is less than or equal to 0
@@ -157,62 +158,65 @@ var wordGame = {
 };
 
 
-//function call to fill the array
-wordGame.fillImageArray();
+$(document).ready(function() {
+    //function call to fill the array
+    wordGame.fillImageArray();
+    wordGame.resetGame();
 
 
-//assign a function to the onkeyup event.
-//this function will check to see if the user's keystroke is a letter
-//if it's a letter, it will check if the user has previously guessed the letter.
-//if the user has not previously guessed the letter, the keystroke is added to an array
-//of guessed letters, and the current letter is stored.
-document.onkeyup = function(ev) {
-    var validChoice = false
-    var letterFound = false;
+    //assign a function to the onkeyup event.
+    //this function will check to see if the user's keystroke is a letter
+    //if it's a letter, it will check if the user has previously guessed the letter.
+    //if the user has not previously guessed the letter, the keystroke is added to an array
+    //of guessed letters, and the current letter is stored.
+    document.onkeyup = function(ev) {
+        var validChoice = false
+        var letterFound = false;
 
+        
+        var i = 0;
+        var j = 0;
     
-    var i = 0;
-    var j = 0;
-   
-    //check if first key press after page load/reload
-    if (wordGame.numKeyPresses === 0) {
-        wordGame.resetGame();
-        wordGame.numKeyPresses++;
-        $("#myLabel").css("display", 'none');
-    }
-    //not the first key press since load/reload
-    else {
-        //loop through array of letters until choice found
-        //or until it reaches the end of the array of letters.
-        while (validChoice === false && i < wordGame.validLetters.length) {
-            if (ev.key === wordGame.validLetters[i]) {
-                validChoice = true;
-                //if valid letter loop through array of previously guessed letters 
-                //until the letter is found or until it reaches the end of the array 
-                //of previously guessed letters
-                while (letterFound === false && j < wordGame.guessedLetters.length) {
-                    if (ev.key === wordGame.guessedLetters[j]) {
-                        letterFound = true;
-                    }
-                    else {
-                        j++;
-                    }
-                }
-                //key stroke was a valid alphabetic character and was not previously chosen
-                if (letterFound === false) {
-                    //add the guessed letter to the array
-                    wordGame.guessedLetters.push(ev.key);
-                    wordGame.currentLetterGuessed = ev.key;
-                    //display the updated array to the screen
-                    $("#guessedLetters").val(wordGame.guessedLetters);
-                    
-                    //search the word to see if the user's guess is found
-                    wordGame.searchWord();
-                }
-            }
-            else {
-                i++;
-            }
+        //check if first key press after page load/reload
+        if (wordGame.numKeyPresses === 0) {
+            wordGame.resetGame();
+            wordGame.numKeyPresses++;
+            $("#myLabel").css("display", 'none');
         }
-    } 
-}
+        //not the first key press since load/reload
+        else {
+            //loop through array of letters until choice found
+            //or until it reaches the end of the array of letters.
+            while (validChoice === false && i < wordGame.validLetters.length) {
+                if (ev.key === wordGame.validLetters[i]) {
+                    validChoice = true;
+                    //if valid letter loop through array of previously guessed letters 
+                    //until the letter is found or until it reaches the end of the array 
+                    //of previously guessed letters
+                    while (letterFound === false && j < wordGame.guessedLetters.length) {
+                        if (ev.key === wordGame.guessedLetters[j]) {
+                            letterFound = true;
+                        }
+                        else {
+                            j++;
+                        }
+                    }
+                    //key stroke was a valid alphabetic character and was not previously chosen
+                    if (letterFound === false) {
+                        //add the guessed letter to the array
+                        wordGame.guessedLetters.push(ev.key);
+                        wordGame.currentLetterGuessed = ev.key;
+                        //display the updated array to the screen
+                        $("#guessedLetters").val(wordGame.guessedLetters);
+                        
+                        //search the word to see if the user's guess is found
+                        wordGame.searchWord();
+                    }
+                }
+                else {
+                    i++;
+                }
+            }
+        } 
+    }
+});
