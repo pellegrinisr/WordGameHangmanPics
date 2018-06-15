@@ -131,12 +131,14 @@ var wordGame = {
         $("#guessedLetters").val(wordGame.guessedLetters);
         $("#numWins").val(wordGame.numWins);
         $("#numLosses").val(wordGame.numLosses);
-        if (this.numWins > 0 || this.numLosses > 0) {
+       /* if (this.numWins > 0 || this.numLosses > 0) {
+            alert('games have been played');
             $(".myImage").attr("src", wordGame.imgArray[0].src);
         }
         else {
+            alert('this is the first game');
             $(".myImage").attr("src", "https://static.wixstatic.com/media/0fc0f7_3b3967ad38134a909cfa93da54e02115~mv2_d_2464_1640_s_2.jpg")
-        }
+        }  */
 
         wordGame.currentImg = 0;
     },
@@ -187,6 +189,7 @@ $(document).ready(function() {
         //check if first key press after page load/reload
         if (wordGame.numKeyPresses === 0) {
             wordGame.resetGame();
+            $(".myImage").attr("src", wordGame.imgArray[wordGame.currentImg].src);
             wordGame.numKeyPresses++;
             $("#myLabel").css("display", 'none');
         }
