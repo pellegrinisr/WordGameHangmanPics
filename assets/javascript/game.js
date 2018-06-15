@@ -129,7 +129,15 @@ var wordGame = {
         wordGame.guessedLetters = [];
         //document.getElementById("guessedLetters").value = wordGame.guessedLetters;   
         $("#guessedLetters").val(wordGame.guessedLetters);
-        $(".myImage").attr("src", wordGame.imgArray[0].src);
+        $("#numWins").val(wordGame.numWins);
+        $("#numLosses").val(wordGame.numLosses);
+        if (this.numWins > 0 || this.numLosses > 0) {
+            $(".myImage").attr("src", wordGame.imgArray[0].src);
+        }
+        else {
+            $(".myImage").attr("src", "https://static.wixstatic.com/media/0fc0f7_3b3967ad38134a909cfa93da54e02115~mv2_d_2464_1640_s_2.jpg")
+        }
+
         wordGame.currentImg = 0;
     },
 
@@ -156,7 +164,6 @@ var wordGame = {
         }
     }
 };
-
 
 $(document).ready(function() {
     //function call to fill the array
