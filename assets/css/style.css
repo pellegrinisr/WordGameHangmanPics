@@ -1,15 +1,14 @@
 .myImage {
     width: 100%;
     margin-top: 6%;
-    border: 1px solid #777777;
+    border: 1px solid white;
 }
 h1 {
     font-family: 'Lobster', cursive;
-    position: absolute;
-    top: 25%;
-    left: 40%;
     color: white;
-    z-index: 100;
+    font-weight: bold;
+    font-size: 5rem;
+    text-align: center;
 }
 #myLabel {
     color: white;
@@ -18,32 +17,19 @@ h1 {
 .row {
     padding-top: 1%;
 }
-.headderPic {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    border: 1px solid #777777;
-}
-h3 {
-    font-family: 'Open Sans', sans-serif;
-}
-.marginLeft h3 { 
-    color: white;
-    font-size: 3em;
-}
+
 .container-fluid {
     height: 100%;
     position: absolute;
-    background: linear-gradient(to bottom right,red, orange, yellow);
-    background-repeat: no-repeat;
-}
-.marginRight {
-    align-self: flex-end;
-}
-.marginRight h3 {
-    color: black;
-}
+    background-color: black;
+
+}   
 .rightCol {
-    border: 1px solid #777777;
+    border: 1px dashed white;
     margin-top: 3%;
+    color: white;
+
+}
+.form-group {
+    font-family: 'Open Sans', sans-serif;
 }
