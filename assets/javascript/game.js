@@ -151,16 +151,8 @@ var wordGame = {
     fillImageArray : function() {
         for (var i = 0; i < 9; i++) {
             wordGame.imgArray[i] = new Image();
+            wordGame.imgArray[i].src = 'assets/images/img' + i + '.png';
         }
-        wordGame.imgArray[0].src = 'assets/images/gallows.png';
-        wordGame.imgArray[1].src = 'assets/images/gallowsAndHead.png';
-        wordGame.imgArray[2].src = 'assets/images/gallowsHeadBody.png';
-        wordGame.imgArray[3].src = 'assets/images/gallowsHeadBodyLeftArm.png';
-        wordGame.imgArray[4].src = 'assets/images/gallowsHeadBodyBothArms.png';
-        wordGame.imgArray[5].src = 'assets/images/gallowsHeadBodyArmsLeftLeg.png';
-        wordGame.imgArray[6].src = 'assets/images/gallowsHeadBodyArmsLegs.png';
-        wordGame.imgArray[7].src = 'assets/images/gallowsHeadBodyArmsLegsLeftFoot.png';
-        wordGame.imgArray[8].src = 'assets/images/gallowsHeadBodyArmsLegsFeet.png';
     }
 };
 
