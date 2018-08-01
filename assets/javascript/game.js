@@ -168,6 +168,15 @@ var wordGame = {
 };
 
 $(document).ready(function() {
+   //array of all the letters in the alphabet
+   //will loop through to create buttons
+    var alphabetArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    for(var i = 0; i < alphabetArray.length; i++) {
+        var button = $('<button>').addClass('letter-button');
+        button.html(alphabetArray[i]);
+        button.addClass(alphabetArray[i]);
+        $('.button-col').append(button);
+    }
     //function call to fill the array
     wordGame.fillImageArray();
     wordGame.resetGame();
@@ -179,7 +188,7 @@ $(document).ready(function() {
     //if the user has not previously guessed the letter, the keystroke is added to an array
     //of guessed letters, and the current letter is stored.
     document.onkeyup = function(ev) {
-        var validChoice = false
+        var validChoice = false;
         var letterFound = false;
 
         
@@ -229,11 +238,43 @@ $(document).ready(function() {
             }
         } 
     }
-    var alphabetArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-    for(var i = 0; i < alphabetArray.length; i++) {
-        var button = $('<button>');
-        button.html(alphabetArray[i]);
-        button.addClass(alphabetArray[i]);
-        $('.button-col').append(button);
-    }
+
+
+    $(document).on('click', '.letter-button', function() {
+        var i = 0;
+        var j = 0;
+        var validChoice = false;
+        var letterFound = false;
+
+        if (wordGame.numKeyPresses === 0) {
+            wordGame.resetGame();
+            $(".myImage").attr("src", wordGame.imgArray[wordGame.currentImg].src);
+            wordGame.numKeyPresses++;
+            $("#myLabel").css("display", 'none');
+        } else {
+            var buttonVal = $(this).html().toLowerCase();
+            console.log(buttonVal);
+            while (validChoice === false && i < wordGame.validLetters.length) {
+
+                if(buttonVal === wordGame.validLetters[i]) {
+                    validChoice = true;
+                    while (letterFound === false && j < wordGame.guessedLetters.length) {
+                        if(buttonVal === wordGame.guessedLetters[j]) {
+                            letterFound = true;
+                        } else {
+                            j++;
+                        }
+                    }
+                    if (!letterFound) {
+                        wordGame.guessedLetters.push(buttonVal);
+                        wordGame.currentLetterGuessed = buttonVal;
+                        $("#guessedLetters").val(wordGame.guessedLetters);
+                        wordGame.searchWord();
+                    }
+                } else {
+                    i++;
+                }
+            }
+        }
+    });
 });
