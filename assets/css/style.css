@@ -17,13 +17,9 @@ h1 {
 .row {
     padding-top: 2%;
 }
-
-.container-fluid {
-    height: 100%;
-    position: absolute;
+html, body {
     background-color: black;
-
-}   
+} 
 .rightCol {
     border: 1px dashed white;
     margin-top: 3%;
@@ -33,13 +29,12 @@ h1 {
 .form-group {
     font-family: 'Open Sans', sans-serif;
 }
-.mobile-input {
-    width: 100%;
+.button-col {
     display: none;
 }
 
 @media screen and (max-width: 1000px) {
-    .mobile-input {
+    .button-col {
         display: block;
     }
 }
