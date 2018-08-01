@@ -33,3 +33,13 @@ h1 {
 .form-group {
     font-family: 'Open Sans', sans-serif;
 }
+.mobile-input {
+    width: 100%;
+    display: none;
+}
+
+@media screen and (max-width: 1000px) {
+    .mobile-input {
+        display: block;
+    }
+}
